@@ -1,0 +1,20 @@
+export const AppState = {
+  currentScreen: 'splash-screen',
+  pin: '',
+  authPin: '',
+  selectedFee: 'normal',
+  walletData: null,
+  selectedAsset: 'CTC',
+  transactionData: {},
+  swapData: { from: 'CTC', to: 'USDT', fromAmount: '', toAmount: '' },
+  marketData: {},
+  notifications: [],
+  theme: 'light',
+  currency: 'USD',
+  language: 'en',
+  contactsList: [],
+  stakingPositions: [],
+  importMethod: 'phrase',
+  importedPhrase: null,
+  importedKey: null
+};

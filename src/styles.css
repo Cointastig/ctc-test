@@ -1,0 +1,194 @@
+/* Tonkeeper-inspired modern design system */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* Light Theme Colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F7F9FB;
+  --bg-tertiary: #EFF3F8;
+  --bg-card: #FFFFFF;
+  /* Text Colors */
+  --text-primary: #000000;
+  --text-secondary: #728197;
+  --text-tertiary: #98A2B3;
+  --text-hint: #C5CBD3;
+  /* Brand Colors */
+  --brand-primary: #2E7CF6;
+  --brand-secondary: #0A58CA;
+  --brand-light: #E8F0FF;
+  /* Status Colors */
+  --success: #16C784;
+  --success-bg: #E7F9F3;
+  --warning: #F5A623;
+  --warning-bg: #FEF6E8;
+  --error: #EA3943;
+  --error-bg: #FDECEC;
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+  --space-3xl: 32px;
+  --space-4xl: 40px;
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+  /* Font Weights */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+}
+
+/* Dark Theme Overrides */
+:root[data-theme='dark'] {
+  --bg-primary: #000000;
+  --bg-secondary: #121212;
+  --bg-tertiary: #1E1E1E;
+  --bg-card: #1E1E1E;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --text-tertiary: #888888;
+  --text-hint: #555555;
+  --brand-primary: #2E7CF6;
+  --brand-secondary: #0A58CA;
+  --brand-light: #163A5F;
+  --success: #16C784;
+  --success-bg: #0F382E;
+  --warning: #F5A623;
+  --warning-bg: #4A3A20;
+  --error: #EA3943;
+  --error-bg: #4A1E20;
+}
+
+/* Base Styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-size: 16px;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* (Other styles for screens, headers, buttons, etc. remain unchanged as in original) */
+
+/* Screen Management */
+.screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: all var(--transition-base);
+  background-color: var(--bg-secondary);
+  z-index: 1;
+}
+.screen.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* ... (other original style definitions for headers, content, buttons, etc.) ... */
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  z-index: 1000;
+  opacity: 0;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-lg);
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.toast-icon {
+  color: var(--bg-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 375px) {
+  .welcome-title { font-size: 28px; }
+  .balance-amount { font-size: 28px; }
+  .amount-input { font-size: 36px; }
+  .welcome-features { gap: var(--space-xl); }
+}
+@media (min-width: 768px) {
+  .screen {
+    max-width: 428px;
+    margin: 0 auto;
+    box-shadow: var(--shadow-lg);
+  }
+  .bottom-nav {
+    max-width: 428px;
+    margin: 0 auto;
+  }
+}
+
+/* PWA Specific (safe area adjustments) */
+body.standalone .header {
+  padding-top: calc(env(safe-area-inset-top, 20px) + var(--space-lg));
+}
+body.standalone .dashboard-header {
+  padding-top: calc(env(safe-area-inset-top, 20px) + var(--space-lg));
+}
+
+/* Accessibility (reduce motion) */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Additional styling for confirm screen */
+.confirm-input-group {
+  margin-bottom: var(--space-lg);
+}
+.confirm-field {
+  padding: var(--space-lg);
+  margin-top: var(--space-sm);
+}
