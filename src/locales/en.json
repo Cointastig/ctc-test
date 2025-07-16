@@ -1,0 +1,182 @@
+{
+  "welcome": {
+    "title": "CTC Wallet",
+    "subtitle": "The easiest way to store and send CTC",
+    "features": {
+      "sendReceive": "Send & Receive",
+      "secure": "Secure",
+      "exchange": "Exchange"
+    },
+    "actions": {
+      "create": "Create New Wallet",
+      "import": "Import Existing Wallet"
+    }
+  },
+  "createWallet": {
+    "title": "Create Wallet",
+    "setPinTitle": "Set up PIN",
+    "setPinSubtitle": "Choose a 6-digit PIN to secure your wallet"
+  },
+  "importWallet": {
+    "title": "Import Wallet",
+    "tabs": {
+      "phrase": "Recovery Phrase",
+      "key": "Private Key"
+    },
+    "phraseDescription": "Enter your 12 or 24 word recovery phrase",
+    "phrasePlaceholder": "Enter your recovery phrase",
+    "keyDescription": "Enter your private key",
+    "keyPlaceholder": "Enter your private key",
+    "importButton": "Import Wallet",
+    "note": "Your keys are encrypted and stored locally"
+  },
+  "seedPhrase": {
+    "title": "Recovery Phrase",
+    "warningTitle": "Write down these words",
+    "warningSubtitle": "This is the only way to recover your wallet. Store it in a safe place.",
+    "copy": "Copy",
+    "confirm": "I've Written It Down"
+  },
+  "seedConfirm": {
+    "title": "Confirm Phrase",
+    "instruction": "Please enter the following words from your recovery phrase:",
+    "confirmButton": "Confirm"
+  },
+  "auth": {
+    "enterPin": "Enter PIN"
+  },
+  "dashboard": {
+    "title": "Main Wallet",
+    "totalBalance": "Total Balance",
+    "actions": {
+      "send": "Send",
+      "receive": "Receive",
+      "buy": "Buy",
+      "swap": "Swap"
+    },
+    "assetsTitle": "Assets",
+    "activityTitle": "Recent Activity",
+    "noTransactions": "No transactions yet"
+  },
+  "send": {
+    "title": "Send",
+    "balance": "Balance: 0 CTC",
+    "recipientLabel": "Recipient Address",
+    "networkFee": "Network Fee",
+    "customize": "Customize",
+    "feeOptions": {
+      "slow": {
+        "label": "Slow",
+        "time": "~10 min",
+        "amount": "0.001 CTC"
+      },
+      "normal": {
+        "label": "Normal",
+        "time": "~3 min",
+        "amount": "0.01 CTC"
+      },
+      "fast": {
+        "label": "Fast",
+        "time": "~30 sec",
+        "amount": "0.1 CTC"
+      }
+    }
+  },
+  "confirm": {
+    "title": "Confirm Transaction",
+    "from": "From",
+    "to": "To",
+    "amount": "Amount",
+    "networkFee": "Network Fee",
+    "total": "Total"
+  },
+  "success": {
+    "title": "Transaction Sent!",
+    "subtitle": "Your transaction has been submitted",
+    "txIdLabel": "Transaction ID",
+    "statusLabel": "Status",
+    "statusPending": "Pending",
+    "viewExplorer": "View on Explorer"
+  },
+  "receive": {
+    "title": "Receive",
+    "addressLabel": "Your CTC Address",
+    "copyAddress": "Copy Address",
+    "requestAmount": "Request Amount",
+    "note": "Only send CTC to this address"
+  },
+  "swap": {
+    "title": "Swap",
+    "from": "From",
+    "to": "To",
+    "balance": "Balance: 0",
+    "fee": "Fee",
+    "slippage": "Slippage",
+    "swapButton": "Swap"
+  },
+  "buy": {
+    "title": "Buy Crypto",
+    "selectMethod": "Select Payment Method",
+    "cardName": "Credit/Debit Card",
+    "cardInstant": "Instant",
+    "cardFee": "3.5% fee",
+    "bankName": "Bank Transfer",
+    "bankSlow": "1-3 days",
+    "bankFee": "0.5% fee",
+    "amountLabel": "Amount",
+    "receiveLabel": "You'll receive"
+  },
+  "markets": {
+    "title": "Markets",
+    "tabs": {
+      "all": "All",
+      "favorites": "Favorites",
+      "gainers": "Gainers",
+      "losers": "Losers"
+    }
+  },
+  "explore": {
+    "title": "Explore",
+    "stakingTitle": "Staking",
+    "stakingSubtitle": "Earn up to 15% APY",
+    "dappsTitle": "DApps",
+    "dappsSubtitle": "Discover decentralized apps"
+  },
+  "staking": {
+    "title": "Staking",
+    "totalStaked": "Total Staked",
+    "rewardsEarned": "Rewards Earned",
+    "stakeButton": "Stake CTC"
+  },
+  "settings": {
+    "title": "Settings",
+    "security": "Security",
+    "biometric": "Biometric Authentication",
+    "changePin": "Change PIN",
+    "recoveryPhrase": "Recovery Phrase",
+    "viewBackup": "View backup",
+    "preferences": "Preferences",
+    "currency": "Currency",
+    "notifications": "Notifications",
+    "support": "Support",
+    "signOut": "Sign Out",
+    "darkMode": "Dark Mode",
+    "enabled": "Enabled",
+    "disabled": "Disabled"
+  },
+  "nav": {
+    "wallet": "Wallet",
+    "markets": "Markets",
+    "explore": "Explore",
+    "settings": "Settings"
+  },
+  "common": {
+    "clear": "Clear",
+    "forgot": "Forgot?",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "done": "Done",
+    "viewAll": "View All"
+  }
+}
