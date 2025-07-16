@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>CTC Wallet</title>
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" />
+  <!-- Icons -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div id="splash-screen" class="screen active">
+    <div class="splash-content">
+      <div class="logo-container">
+        <img src="assets/logo.png" alt="CTC" class="logo-large" />
+      </div>
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Welcome Screen -->
+  <div id="welcome-screen" class="screen">
+    <div class="welcome-container">
+      <div class="welcome-content">
+        <img src="assets/logo.png" alt="CTC Wallet" class="welcome-logo" />
+        <h1 class="welcome-title" data-i18n="welcome.title">CTC Wallet</h1>
+        <p class="welcome-subtitle" data-i18n="welcome.subtitle">The easiest way to store and send CTC</p>
+        <div class="welcome-features">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+              </svg>
+            </div>
+            <span data-i18n="welcome.features.sendReceive">Send & Receive</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <span data-i18n="welcome.features.secure">Secure</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </div>
+            <span data-i18n="welcome.features.exchange">Exchange</span>
+          </div>
+        </div>
+        <div class="welcome-actions">
+          <button id="btn-create-wallet" class="btn btn-primary" data-target="create-wallet-screen" data-i18n="welcome.actions.create">Create New Wallet</button>
+          <button id="btn-import-wallet" class="btn btn-secondary" data-target="import-wallet-screen" data-i18n="welcome.actions.import">Import Existing Wallet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Wallet Screen -->
+  <div id="create-wallet-screen" class="screen">
+    <div class="header">
+      <button class="header-btn back-btn" data-target="welcome-screen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="header-title" data-i18n="createWallet.title">Create Wallet</h1>
+      <div style="width: 40px;"></div>
+    </div>
+    <div class="content">
+      <div class="create-wallet-content">
+        <div class="security-icon-container">
+          <svg class="icon-large" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+          </svg>
+        </div>
+        <h2 class="section-title" data-i18n="createWallet.setPinTitle">Set up PIN</h2>
+        <p class="section-subtitle" data-i18n="createWallet.setPinSubtitle">Choose a 6-digit PIN to secure your wallet</p>
+        <div class="pin-container">
+          <div class="pin-dots">
+            <span class="pin-dot" id="pin-1"></span>
+            <span class="pin-dot" id="pin-2"></span>
+            <span class="pin-dot" id="pin-3"></span>
+            <span class="pin-dot" id="pin-4"></span>
+            <span class="pin-dot" id="pin-5"></span>
+            <span class="pin-dot" id="pin-6"></span>
+          </div>
+        </div>
+        <div class="pin-pad">
+          <button class="pin-key" data-key="1">1</button>
+          <button class="pin-key" data-key="2">2</button>
+          <button class="pin-key" data-key="3">3</button>
+          <button class="pin-key" data-key="4">4</button>
+          <button class="pin-key" data-key="5">5</button>
+          <button class="pin-key" data-key="6">6</button>
+          <button class="pin-key" data-key="7">7</button>
+          <button class="pin-key" data-key="8">8</button>
+          <button class="pin-key" data-key="9">9</button>
+          <button class="pin-key action" id="pin-clear" data-i18n="common.clear">Clear</button>
+          <button class="pin-key" data-key="0">0</button>
+          <button class="pin-key action" id="pin-delete">
+            <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import Wallet Screen -->
+  <div id="import-wallet-screen" class="screen">
+    <div class="header">
+      <button class="header-btn back-btn" data-target="welcome-screen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="header-title" data-i18n="importWallet.title">Import Wallet</h1>
+      <div style="width: 40px;"></div>
+    </div>
+    <div class="content">
+      <div class="import-content">
+        <div class="import-tabs">
+          <button id="tab-phrase" class="tab-btn active" data-import="phrase" data-i18n="importWallet.tabs.phrase">Recovery Phrase</button>
+          <button id="tab-key" class="tab-btn" data-import="key" data-i18n="importWallet.tabs.key">Private Key</button>
+        </div>
+        <div class="import-method-content">
+          <div class="import-phrase-section" id="import-phrase-section">
+            <p class="import-description" data-i18n="importWallet.phraseDescription">Enter your 12 or 24 word recovery phrase</p>
+            <textarea id="import-phrase" class="import-textarea" placeholder="" data-i18n-placeholder="importWallet.phrasePlaceholder"></textarea>
+          </div>
+          <div class="import-key-section" id="import-key-section" style="display: none;">
+            <p class="import-description" data-i18n="importWallet.keyDescription">Enter your private key</p>
+            <input type="password" id="import-key" class="input-field" placeholder="" data-i18n-placeholder="importWallet.keyPlaceholder" />
+          </div>
+        </div>
+        <button id="btn-import-confirm" class="btn btn-primary" data-i18n="importWallet.importButton">Import Wallet</button>
+        <div class="security-note">
+          <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          <span data-i18n="importWallet.note">Your keys are encrypted and stored locally</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recovery Phrase Screen (during wallet creation) -->
+  <div id="seed-phrase-screen" class="screen">
+    <div class="header">
+      <button class="header-btn back-btn" data-target="create-wallet-screen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="header-title" data-i18n="seedPhrase.title">Recovery Phrase</h1>
+      <div style="width: 40px;"></div>
+    </div>
+    <div class="content">
+      <div class="warning-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <div class="warning-content">
+          <h3 data-i18n="seedPhrase.warningTitle">Write down these words</h3>
+          <p data-i18n="seedPhrase.warningSubtitle">This is the only way to recover your wallet. Store it in a safe place.</p>
+        </div>
+      </div>
+      <div class="seed-grid" id="seed-grid">
+        <!-- Seeds will be generated here -->
+      </div>
+      <div class="seed-actions">
+        <button class="btn btn-secondary" id="btn-copy-seed">
+          <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          <span data-i18n="seedPhrase.copy">Copy</span>
+        </button>
+        <button class="btn btn-primary" id="btn-confirm-seed" data-i18n="seedPhrase.confirm">I've Written It Down</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seed Confirmation Screen -->
+  <div id="seed-confirm-screen" class="screen">
+    <div class="header">
+      <button class="header-btn back-btn" data-target="seed-phrase-screen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="header-title" data-i18n="seedConfirm.title">Confirm Phrase</h1>
+      <div style="width: 40px;"></div>
+    </div>
+    <div class="content">
+      <p class="import-description" data-i18n="seedConfirm.instruction">Please enter the following words from your recovery phrase:</p>
+      <div class="confirm-inputs">
+        <div class="confirm-input-group">
+          <label id="confirm-label-1" class="input-label"></label>
+          <input type="text" id="confirm-word-1" class="input-field confirm-field" autocomplete="off" />
+        </div>
+        <div class="confirm-input-group">
+          <label id="confirm-label-2" class="input-label"></label>
+          <input type="text" id="confirm-word-2" class="input-field confirm-field" autocomplete="off" />
+        </div>
+      </div>
+      <button class="btn btn-primary btn-large" id="btn-verify-seed" data-i18n="seedConfirm.confirmButton">Confirm</button>
+    </div>
+  </div>
+
+  <!-- Auth Screen (PIN entry to unlock) -->
+  <div id="auth-screen" class="screen">
+    <div class="auth-container">
+      <img src="assets/logo.png" alt="CTC" class="auth-logo" />
+      <h2 class="auth-title" data-i18n="auth.enterPin">Enter PIN</h2>
+      <div class="pin-container">
+        <div class="pin-dots">
+          <span class="pin-dot" id="auth-pin-1"></span>
+          <span class="pin-dot" id="auth-pin-2"></span>
+          <span class="pin-dot" id="auth-pin-3"></span>
+          <span class="pin-dot" id="auth-pin-4"></span>
+          <span class="pin-dot" id="auth-pin-5"></span>
+          <span class="pin-dot" id="auth-pin-6"></span>
+        </div>
+      </div>
+      <div class="biometric-option">
+        <button class="biometric-btn" id="btn-biometric">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 11v6m-1.5-9.5V6a1.5 1.5 0 113 0v1.5m-9 0V9a1.5 1.5 0 003 0V7.5m12 0V9a1.5 1.5 0 01-3 0V7.5m-9 9V18a1.5 1.5 0 003 0v-1.5m12 0V18a1.5 1.5 0 01-3 0v-1.5M8.5 12a3.5 3.5 0 117 0" />
+          </svg>
+        </button>
+      </div>
+      <div class="pin-pad">
+        <button class="pin-key" data-auth-key="1">1</button>
+        <button class="pin-key" data-auth-key="2">2</button>
+        <button class="pin-key" data-auth-key="3">3</button>
+        <button class="pin-key" data-auth-key="4">4</button>
+        <button class="pin-key" data-auth-key="5">5</button>
+        <button class="pin-key" data-auth-key="6">6</button>
+        <button class="pin-key" data-auth-key="7">7</button>
+        <button class="pin-key" data-auth-key="8">8</button>
+        <button class="pin-key" data-auth-key="9">9</button>
+        <button class="pin-key action" id="auth-clear" data-i18n="common.forgot">Forgot?</button>
+        <button class="pin-key" data-auth-key="0">0</button>
+        <button class="pin-key action" id="auth-delete">
+          <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Screen -->
+  <div id="dashboard-screen" class="screen">
+    <div class="header dashboard-header">
+      <h1 class="header-title" data-i18n="dashboard.title">Main Wallet</h1>
+      <button class="header-btn" id="btn-open-receive">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 19V5m0 0l-7 7m7-7l7 7" />
+        </svg>
+      </button>
+    </div>
+    <div class="content">
+      <div class="balance-section">
+        <h2 class="balance-label" data-i18n="dashboard.totalBalance">Total Balance</h2>
+        <h1 class="balance-amount">$0.00</h1>
+        <p class="balance-change positive"></p>
+      </div>
+      <div class="actions-grid">
+        <button class="action-card" id="action-send">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5m0 0l-7 7m7-7l7 7" />
+          </svg>
+          <span data-i18n="dashboard.actions.send">Send</span>
+        </button>
+        <button class="action-card" id="action-receive">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14m0 0l7-7m-7 7l-7-7" />
+          </svg>
+          <span data-i18n="dashboard.actions.receive">Receive</span>
+        </button>
+        <button class="action-card" id="action-buy">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 10l5 5 5-5" />
+          </svg>
+          <span data-i18n="dashboard.actions.buy">Buy</span>
+        </button>
+        <button class="action-card" id="action-swap">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 7H7m14 0l-4 4m4-4l-4-4M3 17h14M3 17l4 4m-4-4l4-4" />
+          </svg>
+          <span data-i18n="dashboard.actions.swap">Swap</span>
+        </button>
+      </div>
+      <div class="section-header">
+        <h3 class="section-title" data-i18n="dashboard.assetsTitle">Assets</h3>
+        <button class="section-link" id="btn-view-all-assets" data-i18n="common.viewAll">View All</button>
+      </div>
+      <div class="asset-list" id="dashboard-assets">
+        <!-- Asset items loaded here -->
+      </div>
+      <div class="section-header">
+        <h3 class="section-title" data-i18n="dashboard.activityTitle">Recent Activity</h3>
+        <button class="section-link" id="btn-view-all-tx" data-i18n="common.viewAll">View All</button>
+      </div>
+      <div class="transaction-list" id="dashboard-transactions">
+        <!-- Transaction items loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Send Screen -->
+  <div id="send-screen" class="screen">
+    <div class="header">
+      <button class="header-btn back-btn" data-target="dashboard-screen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="header-title" data-i18n="send.title">Send</h1>
+      <div style="width: 40px;"></div>
+    </div>
+    <div class="content">
+      <div class="send-content">
+        <div class="asset-selector">
+          <h3 class="section-title" id="send-asset-symbol">CTC</h3>
+          <p class="section-subtitle" id="send-asset-balance" data-i18n="send.balance">Balance: 0 CTC</p>
+        </div>
+        <div class="amount-section">
+          <div class="amount-input-wrapper">
+            <input type="number" id="amount" class="amount-input" placeholder="0.00" />
+            <span class="amount-currency" id="amount-currency">CTC</span>
+          </div>
+          <div class="amount-buttons">
+            <button class="amount-btn" data-percent="25">25%</button>
+            <button class="amount-btn" data-percent="50">50%</button>
+            <button class="amount-btn" data-percent="75">75%</button>
+            <button class="amount-btn" data-percent="100">MAX</button>
+          </div>
+          <p class="amount-conversion">≈ $0.00 USD</p>
+        </div>
+        <div class="recipient-section">
+          <label class="input-label" data-i18n="send.recipientLabel">Recipient Address</label>
+          <input type="text" id="recipient" class="input-field" placeholder="ctc1..." />
+        </div>
+        <div class="fee-section">
+          <div class="fee-header">
+            <h3 class="section-title" data-i18n="send.networkFee">Network Fee</h3>
+            <button class="link-text" id="btn-custom-fee" data-i18n="send.customize">Customize</button>
+          </div>
+          <div class="fee-options">
+            <label class="fee-option selected">
+              <input type="radio" name="fee" value="slow" checked />
+              <div>
+                <span data-i18n="send.feeOptions.slow.label">Slow</span>
+                <span data-i18n="send.feeOptions.slow.time">~10 min</span>
+                <span data-i18n="send.feeOptions.slow.amount">0.001 CTC</span>
+              </div>
+            </label>
+            <label class="fee-option">
+              <input type="radio" name="fee" value="normal" />
+              <div>
+                <span data-i18n="send.feeOptions.normal.label">Normal</span>
+                <span data-i18n="send.feeOptions.normal.time">~3 min</span>
+                <span data-i18n="send.feeOptions.normal.amount">0.01 CTC</span>
+              </div>
+            </label>
+            <label class="fee-option">
+              <input type="radio" name="fee" value="fast" />
+              <div>
+                <span data-i18n="send.feeOptions.fast.label">Fast</span>
+                <span data-i18n="send.feeOptions.fast.time">~30 sec</span>
+                <span data-i18n="send.feeOptions.fast.amount">0.1 CTC</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-large" id="btn-continue-send" data-i18n="common.continue">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Transaction Screen -->
+  <div id="confirm-screen" class="screen">
+    <div class="header">
+      <button class="header-btn back-btn" data-target="send-screen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="header-title" data-i18n="confirm.title">Confirm Transaction</h1>
+      <div style="width: 40px;"></div>
+    </div>
+    <div class="content center-content">
+      <div class="confirm-container">
+        <div class="confirm-amount">
+          <h2 class="amount-large">0.00 CTC</h2>
+          <p class="amount-usd">≈ $0.00 USD</p>
+        </div>
+        <div class="confirm-details">
+          <div class="detail-row">
+            <span data-i18n="confirm.from">From</span>
+            <span id="confirm-from"></span>
+          </div>
+          <div class="detail-row">
+            <span data-i18n="confirm.to">To</span>
+            <span id="confirm-to"></span>
+          </div>
+          <div class="detail-row">
+            <span data-i18n="confirm.amount">Amount</span>
+            <span id="confirm-amount"></span>
+          </div>
+          <div class="detail-row">
+            <span data-i18n="confirm.networkFee">Network Fee</span>
+            <span id="confirm-fee"></span>
+          </div>
+          <div class="detail-row total-row">
+            <span data-i18n="confirm.total">Total</span>
+            <span id="confirm-total"></span>
+          </div>
+        </div>
+        <div class="confirm-actions">
+          <button class="btn btn-secondary" id="btn-cancel-tx" data-i18n="common.cancel">Cancel</button>
+          <button class="btn btn-primary" id="btn-send-tx" data-i18n="common.confirm">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Screen -->
+  <div id="success-screen" class="screen">
+    <div class="content center-content">
+      <div class="success-container">
+        <div class="success-icon">
+          <svg class="icon-large" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h2 class="success-title" data-i18n="success.title">Transaction Sent!</h2>
+        <p class="success-subtitle" data-i18n="success.subtitle">Your transaction has been submitted</p>
+        <div class="transaction-info-card">
+          <div class="info-row">
+            <span data-i18n="success.txIdLabel">Transaction ID</span>
+            <button class="copy-btn" id="btn-copy-txid">
+              <span class="tx-hash" id="success-txid">-</span>
+              <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </button>
+          </div>
+          <div class="info-row">
+            <span data-i18n="success.statusLabel">Status</span>
+            <span class="status-badge pending" id="success-status" data-i18n="success.statusPending">Pending</span>
+          </div>
+        </div>
+        <div class="success-actions">
+          <button class="btn btn-primary" id="btn-done" data-i18n="common.done">Done</button>
+          <button class="btn btn-ghost" id="btn-view-explorer" data-i18n="success.viewExplorer">View on Explorer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receive Screen -->
+  <div id="receive-screen" class="screen">
+    <div class="header">
+      <button class="header-btn back-btn" data-target="dashboard-screen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="header-title" data-i18n="receive.title">Receive</h1>
+      <button class="header-btn" id="btn-share-address">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m9.632 8.658c0-.889-.361-1.737-1.005-2.358a3.41 3.41 0 00-2.395-1H8.084a3.41 3.41 0 00-2.395 1c-.644.621-1.005 1.469-1.005 2.358m9.632-8.658A3 3 0 0112 9m0 0a3 3 0 00-3 3" />
+        </svg>
+      </button>
+    </div>
+    <div class="content center-content">
+      <div class="receive-content">
+        <div class="qr-container">
+          <div class="qr-code" id="qr-code">
+            <!-- QR code will be generated here -->
+          </div>
+        </div>
+        <div class="address-section">
+          <p class="address-label" data-i18n="receive.addressLabel">Your CTC Address</p>
+          <div class="address-display">
+            <span id="wallet-address">-</span>
+          </div>
+        </div>
+        <div class="receive-actions">
+          <button class="btn btn-primary" id="btn-copy-address">
+            <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <span data-i18n="receive.copyAddress">Copy Address</span>
+          </button>
+          <button class="btn btn-secondary" id="btn-request-amount" data-i18n="receive.requestAmount">Request Amount</button>
+        </div>
+        <div class="receive-note">
+          <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span data-i18n="receive.note">Only send CTC to this address</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swap Screen -->
+  <div id="swap-screen" class="screen">
+    <div class="header">
+      <button class="header-btn back-btn" data-target="dashboard-screen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="header-title" data-i18n="swap.title">Swap</h1>
+      <button class="header-btn" id="btn-swap-settings">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </button>
+    </div>
+    <div class="content">
+      <div class="swap-content">
+        <div class="swap-row">
+          <div class="swap-field">
+            <label class="input-label" data-i18n="swap.from">From</label>
+            <div class="input-group">
+              <input type="number" id="swap-from-amount" class="input-field" placeholder="0.00" />
+              <span class="input-addon" id="swap-from-symbol">CTC</span>
+            </div>
+            <p class="balance-text" id="swap-from-balance" data-i18n="swap.balance">Balance: 0</p>
+          </div>
+          <button class="swap-switch" id="btn-switch-swap">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 7H7m14 0l-4 4m4-4l-4-4M3 17h14M3 17l4 4m-4-4l4-4" />
+            </svg>
+          </button>
+          <div class="swap-field">
+            <label class="input-label" data-i18n="swap.to">To</label>
+            <div class="input-group">
+              <input type="number" id="swap-to-amount" class="input-field" placeholder="0.00" disabled />
+              <span class="input-addon" id="swap-to-symbol">USDT</span>
+            </div>
+            <p class="balance-text" id="swap-to-balance" data-i18n="swap.balance">Balance: 0</p>
+          </div>
+        </div>
+        <div class="rate-info">
+          <p class="rate-text" id="swap-rate">1 CTC = 0.000000 USDT</p>
+          <p class="fee-text" data-i18n="swap.fee">Fee: 0.3%</p>
+          <p class="slippage-text" data-i18n="swap.slippage">Slippage: 0.5%</p>
+        </div>
+        <button class="btn btn-primary btn-large" id="btn-swap" data-i18n="swap.swapButton">Swap</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buy Screen -->
+  <div id="buy-screen" class="screen">
+    <div class="header">
+      <button class="header-btn back-btn" data-target="dashboard-screen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="header-title" data-i18n="buy.title">Buy Crypto</h1>
+      <div style="width: 40px;"></div>
+    </div>
+    <div class="content">
+      <div class="buy-content">
+        <h3 class="section-title" data-i18n="buy.selectMethod">Select Payment Method</h3>
+        <div class="payment-methods">
+          <label class="payment-method">
+            <input type="radio" name="payment" value="card" checked />
+            <div class="payment-method-content">
+              <div class="payment-icon">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="6" width="18" height="12" rx="2" />
+                  <path d="M3 10h18" />
+                </svg>
+              </div>
+              <div class="payment-info">
+                <div class="payment-name" data-i18n="buy.cardName">Credit/Debit Card</div>
+                <div class="payment-details">
+                  <span data-i18n="buy.cardInstant">Instant</span>
+                  <span>•</span>
+                  <span data-i18n="buy.cardFee">3.5% fee</span>
+                </div>
+              </div>
+            </div>
+          </label>
+          <label class="payment-method">
+            <input type="radio" name="payment" value="bank" />
+            <div class="payment-method-content">
+              <div class="payment-icon">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3" />
+                </svg>
+              </div>
+              <div class="payment-info">
+                <div class="payment-name" data-i18n="buy.bankName">Bank Transfer</div>
+                <div class="payment-details">
+                  <span data-i18n="buy.bankSlow">1-3 days</span>
+                  <span>•</span>
+                  <span data-i18n="buy.bankFee">0.5% fee</span>
+                </div>
+              </div>
+            </div>
+          </label>
+        </div>
+        <div class="buy-amount-section">
+          <label class="input-label" data-i18n="buy.amountLabel">Amount</label>
+          <div class="amount-input-group">
+            <input type="number" id="buy-amount" class="input-field" placeholder="100.00" />
+            <select id="buy-currency" class="currency-select">
+              <option>USD</option>
+              <option>EUR</option>
+              <option>GBP</option>
+            </select>
+          </div>
+          <div class="conversion-info">
+            <span data-i18n="buy.receiveLabel">You'll receive</span>
+            <span class="conversion-amount" id="buy-receive-amount">≈ 0 CTC</span>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-large" id="btn-buy-continue" data-i18n="common.continue">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Markets Screen -->
+  <div id="markets-screen" class="screen">
+    <div class="header">
+      <h1 class="header-title" data-i18n="markets.title">Markets</h1>
+      <button class="header-btn" id="btn-open-search">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </button>
+    </div>
+    <div class="market-tabs">
+      <button class="tab-btn active" data-i18n="markets.tabs.all">All</button>
+      <button class="tab-btn" data-i18n="markets.tabs.favorites">Favorites</button>
+      <button class="tab-btn" data-i18n="markets.tabs.gainers">Gainers</button>
+      <button class="tab-btn" data-i18n="markets.tabs.losers">Losers</button>
+    </div>
+    <div class="content">
+      <div class="market-list" id="market-list">
+        <!-- Market items will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Explore Screen -->
+  <div id="explore-screen" class="screen">
+    <div class="header">
+      <h1 class="header-title" data-i18n="explore.title">Explore</h1>
+    </div>
+    <div class="content">
+      <div class="explore-services">
+        <button class="service-card" data-target="staking-screen">
+          <div class="service-info">
+            <h3 class="service-title" data-i18n="explore.stakingTitle">Staking</h3>
+            <p class="service-subtitle" data-i18n="explore.stakingSubtitle">Earn up to 15% APY</p>
+          </div>
+        </button>
+        <button class="service-card" data-i18n="explore.dappsTitle">
+          <div class="service-info">
+            <h3 class="service-title" data-i18n="explore.dappsTitle">DApps</h3>
+            <p class="service-subtitle" data-i18n="explore.dappsSubtitle">Discover decentralized apps</p>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Staking Screen -->
+  <div id="staking-screen" class="screen">
+    <div class="header">
+      <button class="header-btn back-btn" data-target="explore-screen">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h1 class="header-title" data-i18n="staking.title">Staking</h1>
+      <div style="width: 40px;"></div>
+    </div>
+    <div class="content">
+      <div class="staking-overview">
+        <div class="overview-card">
+          <div class="overview-info">
+            <div class="overview-label" data-i18n="staking.totalStaked">Total Staked</div>
+            <div class="overview-value">0 CTC</div>
+          </div>
+          <div class="overview-icon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+        <div class="overview-card">
+          <div class="overview-info">
+            <div class="overview-label" data-i18n="staking.rewardsEarned">Rewards Earned</div>
+            <div class="overview-value">0 CTC</div>
+          </div>
+          <div class="overview-icon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="staking-positions" id="staking-positions">
+        <!-- Staking positions will be loaded here -->
+      </div>
+      <button class="btn btn-primary btn-large" id="btn-stake-ctc" data-i18n="staking.stakeButton">Stake CTC</button>
+    </div>
+  </div>
+
+  <!-- Settings Screen -->
+  <div id="settings-screen" class="screen">
+    <div class="header">
+      <h1 class="header-title" data-i18n="settings.title">Settings</h1>
+    </div>
+    <div class="content">
+      <div class="profile-section">
+        <img src="assets/logo.png" alt="Profile" class="profile-avatar" />
+        <div class="profile-info">
+          <h3 class="profile-name">Main Wallet</h3>
+          <p class="profile-address">ctc1q...mxuh</p>
+        </div>
+        <button class="edit-btn" id="btn-edit-profile">
+          <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+        </button>
+      </div>
+      <div class="settings-group">
+        <h3 class="settings-group-title" data-i18n="settings.security">Security</h3>
+        <button class="settings-item" id="item-biometric">
+          <div class="settings-icon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 11v6m-1.5-9.5V6a1.5 1.5 0 113 0v1.5m-9 0V9a1.5 1.5 0 003 0V7.5m12 0V9a1.5 1.5 0 01-3 0V7.5m-9 9V18a1.5 1.5 0 003 0v-1.5m12 0V18a1.5 1.5 0 01-3 0v-1.5M8.5 12a3.5 3.5 0 117 0" />
+            </svg>
+          </div>
+          <div class="settings-info">
+            <div class="settings-label" data-i18n="settings.biometric">Biometric Authentication</div>
+            <div class="settings-value">Face ID</div>
+          </div>
+          <div class="toggle-switch active" id="biometric-toggle">
+            <div class="toggle-knob"></div>
+          </div>
+        </button>
+        <button class="settings-item" data-target="change-pin-screen">
+          <div class="settings-icon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <div class="settings-info">
+            <div class="settings-label" data-i18n="settings.changePin">Change PIN</div>
+          </div>
+          <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        <button class="settings-item" data-target="backup-phrase-screen">
+          <div class="settings-icon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 7h3a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V9a2 2 0 012-2h3m6 0V5a2 2 0 00-2-2h-2a2 2 0 00-2 2v2m6 0H9" />
+            </svg>
+          </div>
+          <div class="settings-info">
+            <div class="settings-label" data-i18n="settings.recoveryPhrase">Recovery Phrase</div>
+            <div class="settings-value" data-i18n="settings.viewBackup">View backup</div>
+          </div>
+          <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+      <div class="settings-group">
+        <h3 class="settings-group-title" data-i18n="settings.preferences">Preferences</h3>
+        <button class="settings-item" data-target="currency-screen">
+          <div class="settings-icon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="settings-info">
+            <div class="settings-label" data-i18n="settings.currency">Currency</div>
+            <div class="settings-value" id="settings-currency">USD</div>
+          </div>
+          <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        <button class="settings-item" id="item-dark-mode">
+          <div class="settings-icon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 0111.21 3 7 7 0 100 14 7 7 0 0010.79 7.79 9.05 9.05 0 0121 12.79z" />
+            </svg>
+          </div>
+          <div class="settings-info">
+            <div class="settings-label" data-i18n="settings.darkMode">Dark Mode</div>
+            <div class="settings-value" id="theme-value">Off</div>
+          </div>
+          <div class="toggle-switch" id="theme-toggle">
+            <div class="toggle-knob"></div>
+          </div>
+        </button>
+        <button class="settings-item" id="item-notifications">
+          <div class="settings-icon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          </div>
+          <div class="settings-info">
+            <div class="settings-label" data-i18n="settings.notifications">Notifications</div>
+            <div class="settings-value" id="notifications-value" data-i18n="settings.enabled">Enabled</div>
+          </div>
+          <div class="toggle-switch active" id="notifications-toggle">
+            <div class="toggle-knob"></div>
+          </div>
+        </button>
+      </div>
+      <div class="settings-group">
+        <button class="settings-item" id="item-support">
+          <div class="settings-icon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+          <div class="settings-info">
+            <div class="settings-label" data-i18n="settings.support">Support</div>
+          </div>
+          <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        <button class="settings-item danger" id="item-logout">
+          <div class="settings-icon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+          </div>
+          <div class="settings-info">
+            <div class="settings-label" data-i18n="settings.signOut">Sign Out</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <button class="nav-item active" data-tab="dashboard">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+      <span data-i18n="nav.wallet">Wallet</span>
+    </button>
+    <button class="nav-item" data-tab="markets">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      </svg>
+      <span data-i18n="nav.markets">Markets</span>
+    </button>
+    <button class="nav-item" data-tab="explore">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 4v16M17 4v16M3 8h4m10 0h4M3 16h4m10 0h4M5 4h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" />
+      </svg>
+      <span data-i18n="nav.explore">Explore</span>
+    </button>
+    <button class="nav-item" data-tab="settings">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      <span data-i18n="nav.settings">Settings</span>
+    </button>
+  </nav>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <div class="toast-content">
+      <svg class="icon-small toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg>
+      <span class="toast-message" id="toast-message">Action completed</span>
+    </div>
+  </div>
+
+  <!-- Load JavaScript -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
