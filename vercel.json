@@ -1,0 +1,60 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "rewrites": [
+    { "source": "/", "destination": "/src/index.html" },
+    { "source": "/sw.js", "destination": "/src/sw.js" },
+    { "source": "/manifest.json", "destination": "/src/manifest.json" },
+    { "source": "/app.js", "destination": "/src/app.js" },
+    { "source": "/styles.css", "destination": "/src/styles.css" },
+    { "source": "/icon-192.png", "destination": "/src/assets/icon-192.png" },
+    { "source": "/icon-512.png", "destination": "/src/assets/icon-512.png" },
+    { "source": "/favicon.ico", "destination": "/src/assets/favicon.ico" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(self), microphone=(), geolocation=()" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://api.coingecko.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.coingecko.com https://rpc.ctc.network" }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        { "key": "Service-Worker-Allowed", "value": "/" },
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/manifest.json",
+      "headers": [
+        { "key": "Content-Type", "value": "application/manifest+json" }
+      ]
+    },
+    {
+      "source": "/(.*).png",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).ico",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ],
+  "regions": ["fra1", "iad1", "sin1"],
+  "github": { "silent": true }
+}
